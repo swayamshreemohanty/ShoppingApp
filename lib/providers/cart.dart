@@ -37,8 +37,8 @@ class Cart with ChangeNotifier {
   }
 
   void addItem(
-    String
-        productId, //this is one of the key use to identify the product in the cart
+    String productId,
+    //this productId is one of the key use to identify the product in the cart
     double price,
     String title,
   ) {
@@ -69,7 +69,13 @@ class Cart with ChangeNotifier {
   }
 
   void removeItem(String productId) {
-    _items.remove(productId);
+    _items.remove(
+        productId); //using the productId key, here the 'remove method' remove the value for the key from the map.
+    notifyListeners();
+  }
+
+  void clear() {
+    _items = {};
     notifyListeners();
   }
 }
