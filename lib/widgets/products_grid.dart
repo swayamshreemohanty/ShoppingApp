@@ -6,12 +6,16 @@ import '../widgets/product_item.dart';
 import 'package:provider/provider.dart';
 
 class ProductsGrid extends StatelessWidget {
+  final bool _showOnlyFavorites;
+  ProductsGrid(this._showOnlyFavorites);
+
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     //here productData is not the list of products, but to the objext based on this class.
 
-    final products = productsData.items;
+    final products =
+        _showOnlyFavorites ? productsData.favoriteItems : productsData.items;
     //here the products is the list for the incoming list from products.dart
 
 //info****
@@ -22,8 +26,6 @@ class ProductsGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10),
       itemCount: products.length,
-      // itemBuilder: (ctx, i) => ChangeNotifierProvider(
-      //   create: (c) => products[i],
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
         value: products[i],
         child: ProductItem(),
