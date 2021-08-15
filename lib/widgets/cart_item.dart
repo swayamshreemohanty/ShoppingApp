@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart.dart';
@@ -20,7 +22,7 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(id),    
+      key: ValueKey(id),
       //here key plays the main role to identify the exact item we want to remove from the list in the cart.dart providers
       background: Container(
         color: Theme.of(context).errorColor,
@@ -30,6 +32,33 @@ class CartItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('Are you sure'),
+            content: Text(
+              'Do you want to remove the item from the cart?',
+            ),
+            actions: [
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(ctx).pop(false);
+                },
+              ),
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.of(ctx).pop(true);
+                },
+              ),
+            ],
+          ),
+        );
+        //besides the context of show dialog, it takes a builder and that builder
+        //here gives you it's own context for the widget they're about to build.
+      },
       onDismissed: (direction) {
         //here direction will use to give different actions for different directions
         Provider.of<Cart>(context, listen: false).removeItem(productId);
