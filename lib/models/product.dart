@@ -8,6 +8,8 @@ class Product with ChangeNotifier {
   final double price;
   final String imageUrl;
   bool isFavorite;
+  //All these porperties are final, because these are 
+  //can't reassign the value after a product has been created.
 
   Product({
     @required this.id,
@@ -22,4 +24,6 @@ class Product with ChangeNotifier {
     isFavorite = !isFavorite;
     notifyListeners();
   }
+
+  void addProduct(Product editedProduct) {}
 }

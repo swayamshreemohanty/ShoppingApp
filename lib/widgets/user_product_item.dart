@@ -1,12 +1,14 @@
 // @dart=2.9
 
 import 'package:flutter/material.dart';
+import '../screens/edit_product_screen.dart';
 
 class UserProductItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
 
-  UserProductItem(this.title, this.imageUrl);
+  UserProductItem(this.id,this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class UserProductItem extends StatelessWidget {
       ),
       trailing: Container(
         // if we do not add the Container(), here in the Row(), takes as much space as it can get,
-        //and trailling the place where we insert this into the ListTile doesn't restrict that size, 
+        //and trailling the place where we insert this into the ListTile doesn't restrict that size,
         //so we cause the error.
         width: 100,
         child: Row(
@@ -25,7 +27,9 @@ class UserProductItem extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.edit),
               color: Theme.of(context).primaryColor,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(EditProductScreen.routeName,arguments: id);
+              },
             ),
             IconButton(
               icon: Icon(Icons.delete),
