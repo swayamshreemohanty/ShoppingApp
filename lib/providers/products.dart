@@ -73,4 +73,9 @@ class Products with ChangeNotifier {
   }
 //this is fucntion is used to update the existing products,
 //triggered from the modify products from the drawer.
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
+    notifyListeners();
+  }
 }

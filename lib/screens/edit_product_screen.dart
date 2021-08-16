@@ -41,7 +41,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     //this is run before 'build()' is executed
     if (_isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
-      if (_isInit) {
+      if (productId != null) {
         _editedProduct =
             Provider.of<Products>(context, listen: false).findById(productId);
         // _editedProduct = product;
@@ -87,7 +87,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
     }
 
-    // print(_editedProduct.title);
+    print(_editedProduct.id);
     // print(_editedProduct.description);
     // print(_editedProduct.price);
     // print(_editedProduct.imageUrl);
@@ -141,12 +141,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   },
                   onSaved: (value) {
                     _editedProduct = Product(
-                        id: _editedProduct.id,
-                        isFavorite: _editedProduct.isFavorite,
-                        title: value,
-                        description: _editedProduct.description,
-                        price: _editedProduct.price,
-                        imageUrl: _editedProduct.imageUrl);
+                      id: _editedProduct.id,
+                      title: value,
+                      description: _editedProduct.description,
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl,
+                      isFavorite: _editedProduct.isFavorite,
+                    );
                   },
                 ),
                 TextFormField(
@@ -178,12 +179,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   onSaved: (value) {
                     _editedProduct = Product(
                       id: _editedProduct.id,
-                      isFavorite: _editedProduct.isFavorite,
                       title: _editedProduct.title,
                       description: _editedProduct.description,
                       price: double.parse(value),
                       //double.parse is used to convert the value from double to string
                       imageUrl: _editedProduct.imageUrl,
+                      isFavorite: _editedProduct.isFavorite,
                     );
                   },
                 ),
