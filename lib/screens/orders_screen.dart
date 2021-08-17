@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/order.dart' show Orders;
@@ -12,38 +14,56 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  var _isLoading = false;
+  Future _orderFuture;
+
+  Future _obtainOrderFuture() {
+    return Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
+  }
+
   @override
   void initState() {
-    Future.delayed(Duration.zero).then((_) async {
-      setState(() {
-        _isLoading = true;
-      });
-      await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
-      setState(() {
-        _isLoading = false;
-      });
-    });
+    _orderFuture = _obtainOrderFuture();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final orderData = Provider.of<Orders>(context);
+    // final orderData = Provider.of<Orders>(context);
+    print('building orderes');
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
-      body: orderData.orders.isEmpty
-          // ? Center(child: Text("No orders found!"))
-          ? Center(
-              child: CircularProgressIndicator(
+      // body: orderData.orders.isEmpty
+      // ? Center(child: Text("No orders found!"))
+      body: FutureBuilder(
+        future: _orderFuture,
+        builder: (ctx, dataSnapshot) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting ||
+              dataSnapshot.error == null) {
+            return Center(
+                child: CircularProgressIndicator(
               color: Colors.blue,
-            ))
-          : ListView.builder(
-              itemCount: orderData.orders.length,
-              itemBuilder: (ctx, i) => OrderItem(orderData.orders[i])),
+            ));
+          } else {
+            if (dataSnapshot.error != null) {
+              //...
+              //// Do error Handling stuff
+              return Center(
+                child: Text('An error occured!'),
+              );
+            } else {
+              return Consumer<Orders>(
+                builder: (ctx, orderData, child) => ListView.builder(
+                  itemCount: orderData.orders.length,
+                  itemBuilder: (ctx, i) => OrderItem(orderData.orders[i]),
+                ),
+              );
+            }
+          }
+        },
+      ),
     );
   }
 }
