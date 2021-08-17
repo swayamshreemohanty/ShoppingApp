@@ -14,6 +14,7 @@ class UserProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
     return ListTile(
       title: Text(title),
       leading: CircleAvatar(
@@ -37,8 +38,21 @@ class UserProductItem extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.delete),
               color: Theme.of(context).errorColor,
-              onPressed: () {
-                Provider.of<Products>(context, listen: false).deleteProduct(id);
+              onPressed: () async {
+                try {
+                  await Provider.of<Products>(context, listen: false)
+                      .deleteProduct(id);
+                } catch (error) {
+                  scaffold.showSnackBar(
+                      SnackBar(content: Text('Deleteing failed')));
+                }
+//here we are not directly using the Scaffold.of(context), because here everything comes under the 'Future' and in this 'Future'
+//'async' is used and therefore everything in these is wrapped into a Future and for this reason 'context' can't actually
+//be resolved anymore due to Flutter internal mechanism.
+//If we use Scaffold.of(context) in the 'Future', when the code touch to it, it's already updating the widget tree
+//at this point of time, it's not sure whether a context still referes to the same context it did before.
+//So, if we add the Scaffold.of(context) at the build method starting point and store into a variable, then every thing wil work fine.
+//because if we using a variable in the 'Future', here we are just using a variable instead of refecting access.
               },
             ),
           ],
