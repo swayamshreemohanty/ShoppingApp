@@ -58,17 +58,11 @@ class Products with ChangeNotifier {
     //then not ield anything in the end but it always returns  a future because this now is all wrapped into a future.
     const url =
         'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products';
-    //**1st method**//
-    // return http
-    //     .post(
+
     //Here we return this http.post(), because here we return the result of calling post and
     //then calling .then() and the result of calling .then() is another future and that's the future we return here.
     //************************************//
 
-    //** 2nd method **//
-    // await http
-    //     .post(
-    //   url,
     //Here 'await' keyword tells Dart that we want to wait for this operation to finish before we move on
     //to the next line in our Dart code. Internally it is still run the other code and wait for the response
     //to execute the '.then()'.
@@ -102,31 +96,6 @@ class Products with ChangeNotifier {
       print("Catch and threw the error");
       throw error;
     }
-
-    //** 1st .then() Method**/
-    // .then((response) {
-    // print(json.decode(response.body)); //this is for print the response
-
-    //***2nd invisible .then() method ***//
-    //here, we wrap the upper part in a final response with the 'await', by doing this here a invisible
-    //.then() block will run to excecute the below codes after the response will recieved in the upper block
-    // final newProduct = Product(
-    //   id: (json.decode(response.body)['name']),
-    //   title: product.title,
-    //   description: product.description,
-    //   price: product.price,
-    //   imageUrl: product.imageUrl,
-    // );
-    // print("Product id from firebase is: " + newProduct.id);
-    // _items.add(newProduct);
-    // // _items.insert(0, newProduct);  //This is a alternative method to add the list at the begining.
-    // notifyListeners();
-
-    //***1st .then() ***//not neccessary for invisible .then() method//
-    // }).catchError((error) {
-    //   print(error);
-    //   print("Catch and threw the error");
-    //   throw error;
 
     // JSON= JavaScript Object Notation
   }

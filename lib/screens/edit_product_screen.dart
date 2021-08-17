@@ -85,7 +85,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   } //this is add to prevent memeory leak. This function automatically remove the
   //FocusNode after the user left the text input screen
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;
@@ -105,41 +105,37 @@ class _EditProductScreenState extends State<EditProductScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .catchError((error) {
-        return showDialog(
-            //this is return showDialog<Null>(...) instead of return showDialog(...)
-            context: context,
-            builder: (ctx) => AlertDialog(
-                  title: Text('An error occured!'),
-                  content: Text('Something went wrong.'),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text('Okay'),
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                        print(
-                            'information section done in edit_product_screen');
-                      },
-                    ),
-                  ],
-                ));
-      }).then((_) {
+      // Provider.of<Products>(context, listen: false)
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      } catch (error) {
+        await showDialog(
+          //this is return showDialog<Null>(...) instead of return showDialog(...)
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('An error occured!'),
+            content: Text('Something went wrong.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  print('information section done in edit_product_screen');
+                },
+              ),
+            ],
+          ),
+        );
+      } finally {
         setState(() {
           _isLoading = false;
           print(
               'SetState after information to close spinner in edit_product_screen');
         });
         Navigator.of(context).pop();
-      });
+      }
     }
-
-    // print(_editedProduct.id);
-    // print(_editedProduct.description);
-    // print(_editedProduct.price);
-    // print(_editedProduct.imageUrl);
-    //this is used to go back to the previous page to show our all old/new products
   }
 
   @override
