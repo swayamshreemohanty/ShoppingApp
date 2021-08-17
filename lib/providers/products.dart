@@ -1,7 +1,8 @@
 // @dart=2.9
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
+import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -51,17 +52,41 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
-      id: DateTime.now().toString(),
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct);  //This is a alternative method to add the list at the begining.
-    notifyListeners();
+  Future<void> addProduct(Product product) {
+    const url =
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products';
+    return http //1. here we return this http.post(), because here we return the result of calling post and
+        .post(
+      //2. then calling .then() and the result of calling .then() is another future and that's the future we return here.
+      url,
+      body: json.encode(
+        {
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavorite': product.isFavorite,
+        },
+      ),
+    )
+        .then((response) {
+      // print(response);
+      // print(json.decode(response.body)); //this is for print the response
+      final newProduct = Product(
+        id: (json.decode(response.body)['name']),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
+      print("Product id from firebase is: " + newProduct.id);
+      _items.add(newProduct);
+      // _items.insert(0, newProduct);  //This is a alternative method to add the list at the begining.
+      notifyListeners();
+    }).catchError((error) {
+      throw error;
+    });
+    // JSON= JavaScript Object Notation
   }
 
   void updateProduct(String id, Product newProduct) {
