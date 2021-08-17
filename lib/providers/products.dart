@@ -58,11 +58,14 @@ class Products with ChangeNotifier {
     //then not ield anything in the end but it always returns  a future because this now is all wrapped into a future.
     const url =
         'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products';
+    //**1st method**//
     // return http
     //     .post(
     //Here we return this http.post(), because here we return the result of calling post and
     //then calling .then() and the result of calling .then() is another future and that's the future we return here.
     //************************************//
+
+    //** 2nd method **//
     // await http
     //     .post(
     //   url,
@@ -100,10 +103,11 @@ class Products with ChangeNotifier {
       throw error;
     }
 
+    //** 1st .then() Method**/
     // .then((response) {
     // print(json.decode(response.body)); //this is for print the response
 
-    //******//
+    //***2nd invisible .then() method ***//
     //here, we wrap the upper part in a final response with the 'await', by doing this here a invisible
     //.then() block will run to excecute the below codes after the response will recieved in the upper block
     // final newProduct = Product(
@@ -117,6 +121,8 @@ class Products with ChangeNotifier {
     // _items.add(newProduct);
     // // _items.insert(0, newProduct);  //This is a alternative method to add the list at the begining.
     // notifyListeners();
+
+    //***1st .then() ***//not neccessary for invisible .then() method//
     // }).catchError((error) {
     //   print(error);
     //   print("Catch and threw the error");
