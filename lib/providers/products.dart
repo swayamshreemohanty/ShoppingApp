@@ -61,6 +61,7 @@ class Products with ChangeNotifier {
       // print(json.decode(response.body));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
+        _items.clear();
         return;
       }
       //here we using 'dynamic', because Dart doesn't understand this nested map, coming from the firebase.
@@ -77,8 +78,7 @@ class Products with ChangeNotifier {
           ),
         );
       });
-      _items =
-          loadedProducts.reversed.toList(); // To show the new order on the top
+      _items = loadedProducts; // To show the new order on the top
       notifyListeners();
     } catch (error) {
       throw (error);

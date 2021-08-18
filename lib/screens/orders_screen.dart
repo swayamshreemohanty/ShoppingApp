@@ -23,6 +23,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void initState() {
     _orderFuture = _obtainOrderFuture();
+
     super.initState();
   }
 
@@ -30,6 +31,7 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     // final orderData = Provider.of<Orders>(context);
     print('building orderes');
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
@@ -40,23 +42,27 @@ class _OrderScreenState extends State<OrderScreen> {
       body: FutureBuilder(
         future: _orderFuture,
         builder: (ctx, dataSnapshot) {
+          // print(dataSnapshot.data);
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: CircularProgressIndicator(
-              color: Colors.blue,
-            ));
+            return Center(child: CircularProgressIndicator());
           } else {
             if (dataSnapshot.error != null) {
               return Center(
-                child: Text('An error occured!'),
+                child: Text('An error occurred!'),
               );
             } else {
-              return Consumer<Orders>(
-                builder: (ctx, orderData, child) => ListView.builder(
-                  itemCount: orderData.orders.length,
-                  itemBuilder: (ctx, i) => OrderItem(orderData.orders[i]),
-                ),
-              );
+              return Consumer<Orders>(builder: (ctx, orderData, child) {
+                print(orderData.orders.isEmpty);
+
+                return orderData.orders.isEmpty
+                    ? Center(
+                        child: Text('No orders found!'),
+                      )
+                    : ListView.builder(
+                        itemCount: orderData.orders.length,
+                        itemBuilder: (ctx, i) => OrderItem(orderData.orders[i]),
+                      );
+              });
             }
           }
         },
@@ -64,11 +70,3 @@ class _OrderScreenState extends State<OrderScreen> {
     );
   }
 }
-
-
-// else {
-//             if (dataSnapshot.error != null) {
-//               return Center(
-//                 child: Text('An error occured!'),
-//               );
-//             }

@@ -29,10 +29,10 @@ class Orders with ChangeNotifier {
     const url =
         'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json';
     final response = await http.get(url);
-    print(json.decode(response.body));
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData == null) {
+      _orders.clear();
       return;
     }
     extractedData.forEach((orderId, orderData) {
@@ -54,7 +54,7 @@ class Orders with ChangeNotifier {
         ),
       ));
     });
-    _orders = loadedOrders;
+    _orders = loadedOrders.reversed.toList();
     notifyListeners();
   }
 
@@ -90,6 +90,4 @@ class Orders with ChangeNotifier {
         ));
     notifyListeners();
   }
-
-  toList() {}
 }
