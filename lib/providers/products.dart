@@ -58,7 +58,7 @@ class Products with ChangeNotifier {
         'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json';
     try {
       final response = await http.get(url);
-      print(json.decode(response.body));
+      // print(json.decode(response.body));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
         return;

@@ -40,16 +40,13 @@ class _OrderScreenState extends State<OrderScreen> {
       body: FutureBuilder(
         future: _orderFuture,
         builder: (ctx, dataSnapshot) {
-          if (dataSnapshot.connectionState == ConnectionState.waiting ||
-              dataSnapshot.error == null) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
                 child: CircularProgressIndicator(
               color: Colors.blue,
             ));
           } else {
             if (dataSnapshot.error != null) {
-              //...
-              //// Do error Handling stuff
               return Center(
                 child: Text('An error occured!'),
               );
@@ -67,3 +64,11 @@ class _OrderScreenState extends State<OrderScreen> {
     );
   }
 }
+
+
+// else {
+//             if (dataSnapshot.error != null) {
+//               return Center(
+//                 child: Text('An error occured!'),
+//               );
+//             }
