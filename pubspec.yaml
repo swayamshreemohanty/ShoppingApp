@@ -38,6 +38,13 @@ dev_dependencies:
     sdk: flutter
  
 
+  flutter_launcher_icons: "^0.9.1"
+
+# flutter_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/images/icon/Red-Tape-Logo.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
