@@ -4,6 +4,7 @@ import 'package:shop_app/models/product.dart';
 import '../screens/product_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/providers/cart.dart';
+import '../providers/auth.dart';
 
 class ProductItem extends StatelessWidget {
   @override
@@ -16,7 +17,8 @@ class ProductItem extends StatelessWidget {
       context,
       listen: false,
     );
-    print("Provider Product changes");
+    final authData = Provider.of<Auth>(context, listen: false);
+    // print("Provider Product changes");
     return ClipRRect(
       //ClipRRect mean, clip with round the ractangle
       borderRadius: BorderRadius.circular(10),
@@ -46,7 +48,7 @@ class ProductItem extends StatelessWidget {
                 product.isFavorite ? Icons.favorite : Icons.favorite_border,
               ),
               onPressed: () {
-                product.toggleFavoriteStatus();
+                product.toggleFavoriteStatus(authData.token, authData.userId);
                 // print("Consumer Product changes");
               },
               color: Theme.of(context).accentColor,

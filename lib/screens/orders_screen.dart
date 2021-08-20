@@ -30,7 +30,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     // final orderData = Provider.of<Orders>(context);
-    print('building orderes');
+    // print('building orderes');
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +52,7 @@ class _OrderScreenState extends State<OrderScreen> {
               );
             } else {
               return Consumer<Orders>(builder: (ctx, orderData, child) {
-                print(orderData.orders.isEmpty);
+                // print(orderData.orders.isEmpty);
 
                 return orderData.orders.isEmpty
                     ? Center(

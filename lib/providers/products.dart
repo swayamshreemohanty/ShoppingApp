@@ -45,6 +45,10 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
+  final String authToken;
+  final String userId;
+  Products(this.authToken, this.userId, this._items);
+
   List<Product> get favoriteItems {
     return _items.where((element) => element.isFavorite).toList();
   }
@@ -54,17 +58,28 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json';
+    var url =
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken';
     try {
       final response = await http.get(url);
-      // print(json.decode(response.body));
+      print("This is response body");
+      print(json.decode(response.body));
+
+      //here we using 'dynamic', because Dart doesn't understand this nested map, coming from the firebase.
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      // print("This is extractedData");
+      // print(extractedData);
       if (extractedData == null) {
         _items.clear();
         return;
       }
-      //here we using 'dynamic', because Dart doesn't understand this nested map, coming from the firebase.
+      url =
+          'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/userFavorites/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
+      print("This is favorite response body");
+      print(json.decode(favoriteResponse.body));
       final List<Product> loadedProducts = []; //empty temporary list
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(
@@ -74,13 +89,18 @@ class Products with ChangeNotifier {
             description: prodData['description'],
             price: prodData['price'],
             imageUrl: prodData['imageUrl'],
-            isFavorite: prodData['isFavorite'],
+            isFavorite:
+                favoriteData == null ? false : favoriteData[prodId] ?? false,
+            //here, if the favorite status is null, then the user never set the favorite status and it is set false by default,
+            //if it is not null then and the favoriteData is avaible then it's check the product Id and assign the status to it.
+            //if the favoriteData[prodId] is also null/ !true then it is fall back to the status after the ??, and i.e false.
           ),
         );
       });
       _items = loadedProducts; // To show the new order on the top
       notifyListeners();
     } catch (error) {
+      print(error);
       throw (error);
     }
   }
@@ -89,8 +109,8 @@ class Products with ChangeNotifier {
     //Ny using 'async', all of the below code which are come under the 'Future' automatically wrapped in to a Future.
     //using this 'async' here, the function or the method on which we use it always returns a future and that future might
     //then not ield anything in the end but it always returns  a future because this now is all wrapped into a future.
-    const url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json';
+    final url =
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken';
 
     //Here we return this http.post(), because here we return the result of calling post and
     //then calling .then() and the result of calling .then() is another future and that's the future we return here.
@@ -109,7 +129,6 @@ class Products with ChangeNotifier {
             'description': product.description,
             'imageUrl': product.imageUrl,
             'price': product.price,
-            'isFavorite': product.isFavorite,
           },
         ),
       );
@@ -140,7 +159,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url =
-          'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json';
+          'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json?auth=$authToken';
       try {
         await http.patch(url,
             body: json.encode({
@@ -163,7 +182,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json';
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json?auth=$authToken';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);

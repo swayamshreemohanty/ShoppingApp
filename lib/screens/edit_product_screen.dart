@@ -121,7 +121,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 child: Text('Okay'),
                 onPressed: () {
                   Navigator.of(ctx).pop();
-                  print('information section done in edit_product_screen');
+                  // print('information section done in edit_product_screen');
                 },
               ),
             ],
@@ -130,8 +130,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
       } finally {
         setState(() {
           _isLoading = false;
-          print(
-              'SetState after information to close spinner in edit_product_screen');
+          // print(
+          // 'SetState after information to close spinner in edit_product_screen');
         });
         Navigator.of(context).pop();
       }
