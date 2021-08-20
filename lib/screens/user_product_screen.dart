@@ -21,6 +21,7 @@ class UserProductScreen extends StatelessWidget {
     //If you don't turnoff this, this will cause a infinite loop, because below we are calling the _refreshproduct() by the FutureBuilder
     //which go ahed and fetching products and update the products in this screen. By this our build method will retrigger and also by this
     //our future builder also will retrigger. Soo this process is goin on to an infinity loop.
+    //Yes, if we add listen:false, then it should work.
 
     return Scaffold(
       appBar: AppBar(
