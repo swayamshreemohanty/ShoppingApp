@@ -23,19 +23,23 @@ class ProductsGrid extends StatelessWidget {
 //with this piece of information, we're telling the provider package that we want to establish a direct
 //communication channel to the provided instance of the products class.
 //****
-    return GridView.builder(
-      padding: const EdgeInsets.all(10),
-      itemCount: products.length,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        value: products[i],
-        child: ProductItem(),
-      ),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, //this is for 2 columns
-        childAspectRatio: 3 / 2, //a bit taller than they are wide
-        crossAxisSpacing: 10, //spacing between the columns
-        mainAxisSpacing: 10, //space between the row
-      ),
-    );
+    return productsData.items.isEmpty
+        ? Center(
+            child: Text('No products data available!'),
+          )
+        : GridView.builder(
+            padding: const EdgeInsets.all(10),
+            itemCount: products.length,
+            itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+              value: products[i],
+              child: ProductItem(),
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, //this is for 2 columns
+              childAspectRatio: 3 / 2, //a bit taller than they are wide
+              crossAxisSpacing: 10, //spacing between the columns
+              mainAxisSpacing: 10, //space between the row
+            ),
+          );
   }
 }

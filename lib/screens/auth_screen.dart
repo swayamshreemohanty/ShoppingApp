@@ -67,6 +67,7 @@ class AuthScreen extends StatelessWidget {
                       child: Text(
                         'RedTape',
                         style: TextStyle(
+                          // ignore: deprecated_member_use
                           color: Theme.of(context).accentTextTheme.title.color,
                           fontSize: 50,
                           fontFamily: 'Anton',
@@ -115,6 +116,7 @@ class _AuthCardState extends State<AuthCard> {
         title: Text('An Error Occured!'),
         content: Text(message),
         actions: [
+          // ignore: deprecated_member_use
           FlatButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -238,6 +240,7 @@ class _AuthCardState extends State<AuthCard> {
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,
                   controller: _passwordController,
+                  // ignore: missing_return
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
                       return 'Password is too short!';
@@ -253,6 +256,7 @@ class _AuthCardState extends State<AuthCard> {
                     decoration: InputDecoration(labelText: 'Confirm Password'),
                     obscureText: true,
                     validator: _authMode == AuthMode.Signup
+                        // ignore: missing_return
                         ? (value) {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
@@ -266,6 +270,7 @@ class _AuthCardState extends State<AuthCard> {
                 if (_isLoading)
                   CircularProgressIndicator()
                 else
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     child:
                         Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
@@ -278,6 +283,7 @@ class _AuthCardState extends State<AuthCard> {
                     color: Theme.of(context).primaryColor,
                     textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
+                // ignore: deprecated_member_use
                 FlatButton(
                   child: Text(
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),

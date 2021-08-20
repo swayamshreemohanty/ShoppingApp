@@ -41,32 +41,36 @@ class UserProductScreen extends StatelessWidget {
         //Here FutureBuilder is used to load this screen the at time of 1st load to show the items
         //filter by userId.
         future: _refreshProducts(context),
-        builder: (ctx, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.blue,
-                    ),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () => _refreshProducts(context),
-                    child: Consumer<Products>(
-                      builder: (ctx, productData, _) => Padding(
-                        padding: EdgeInsets.all(8),
-                        child: ListView.builder(
-                          itemCount: productData.items.length,
-                          itemBuilder: (ctx, i) => Column(children: [
-                            UserProductItem(
-                              productData.items[i].id,
-                              productData.items[i].title,
-                              productData.items[i].imageUrl,
-                            ),
-                            Divider(),
-                          ]),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Colors.blue,
+                ),
+              )
+            : RefreshIndicator(
+                onRefresh: () => _refreshProducts(context),
+                child: Consumer<Products>(
+                  builder: (ctx, productData, _) => productData.items.isEmpty
+                      ? Center(
+                          child: Text("No data available!"),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.all(8),
+                          child: ListView.builder(
+                            itemCount: productData.items.length,
+                            itemBuilder: (ctx, i) => Column(children: [
+                              UserProductItem(
+                                productData.items[i].id,
+                                productData.items[i].title,
+                                productData.items[i].imageUrl,
+                              ),
+                              Divider(),
+                            ]),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                ),
+              ),
       ),
     );
   }
