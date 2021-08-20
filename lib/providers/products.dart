@@ -57,13 +57,15 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken';
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken&$filterString';
     try {
       final response = await http.get(url);
-      print("This is response body");
-      print(json.decode(response.body));
+      // print("This is response body");
+      // print(json.decode(response.body));
 
       //here we using 'dynamic', because Dart doesn't understand this nested map, coming from the firebase.
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -110,7 +112,7 @@ class Products with ChangeNotifier {
     //using this 'async' here, the function or the method on which we use it always returns a future and that future might
     //then not ield anything in the end but it always returns  a future because this now is all wrapped into a future.
     final url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken';
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken"';
 
     //Here we return this http.post(), because here we return the result of calling post and
     //then calling .then() and the result of calling .then() is another future and that's the future we return here.
@@ -129,6 +131,7 @@ class Products with ChangeNotifier {
             'description': product.description,
             'imageUrl': product.imageUrl,
             'price': product.price,
+            'creatorId': userId,
           },
         ),
       );

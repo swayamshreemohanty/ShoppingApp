@@ -10,12 +10,18 @@ import '../screens/edit_product_screen.dart';
 class UserProductScreen extends StatelessWidget {
   static const routeName = '/user-products';
   Future<void> _refreshProducts(BuildContext context) async {
-    await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+    await Provider.of<Products>(context, listen: false)
+        .fetchAndSetProducts(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<Products>(context);
+    // final productData = Provider.of<Products>(context);
+    //Because of this productData= Provider... , we have rebuilt the entire page, (because of the listener) when the product change
+    //If you don't turnoff this, this will cause a infinite loop, because below we are calling the _refreshproduct() by the FutureBuilder
+    //which go ahed and fetching products and update the products in this screen. By this our build method will retrigger and also by this
+    //our future builder also will retrigger. Soo this process is goin on to an infinity loop.
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Products'),
@@ -30,22 +36,36 @@ class UserProductScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: ListView.builder(
-            itemCount: productData.items.length,
-            itemBuilder: (ctx, i) => Column(children: [
-              UserProductItem(
-                productData.items[i].id,
-                productData.items[i].title,
-                productData.items[i].imageUrl,
-              ),
-              Divider(),
-            ]),
-          ),
-        ),
+      body: FutureBuilder(
+        //Here FutureBuilder is used to load this screen the at time of 1st load to show the items
+        //filter by userId.
+        future: _refreshProducts(context),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                    ),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => _refreshProducts(context),
+                    child: Consumer<Products>(
+                      builder: (ctx, productData, _) => Padding(
+                        padding: EdgeInsets.all(8),
+                        child: ListView.builder(
+                          itemCount: productData.items.length,
+                          itemBuilder: (ctx, i) => Column(children: [
+                            UserProductItem(
+                              productData.items[i].id,
+                              productData.items[i].title,
+                              productData.items[i].imageUrl,
+                            ),
+                            Divider(),
+                          ]),
+                        ),
+                      ),
+                    ),
+                  ),
       ),
     );
   }

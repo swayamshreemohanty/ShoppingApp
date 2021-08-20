@@ -44,7 +44,7 @@ class Auth with ChangeNotifier {
           },
         ),
       );
-      // print(json.decode(response.body));
+      print(json.decode(response.body));
       final responseData = json.decode(response.body);
       if (responseData['error'] != null) {
         //here we will get the below error message from the debug consol using ***print(json.decode(response.body));***

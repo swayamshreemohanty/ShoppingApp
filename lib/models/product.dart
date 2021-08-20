@@ -9,6 +9,7 @@ class Product with ChangeNotifier {
   final String description;
   final double price;
   final String imageUrl;
+ 
   bool isFavorite;
   //All these porperties are final, because these are
   //can't reassign the value after a product has been created.
