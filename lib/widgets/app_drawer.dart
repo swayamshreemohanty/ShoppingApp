@@ -39,8 +39,6 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Manage Products'),
             onTap: () {
-              Navigator.of(context).pop(); //to close the drawer
-              Navigator.of(context).pushReplacementNamed('/');
               Navigator.of(context)
                   .pushReplacementNamed(UserProductScreen.routeName);
             },
@@ -50,9 +48,9 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.exit_to_app),
             title: Text('Log Out'),
             onTap: () {
+              Navigator.of(context).pop(); //to close the drawer
+              Navigator.of(context).pushReplacementNamed('/');
               Provider.of<Auth>(context, listen: false).logout();
-              // Navigator.of(context)
-              //     .pushReplacementNamed(UserProductScreen.routeName);
             },
           ),
         ],
