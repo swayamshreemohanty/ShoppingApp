@@ -1,6 +1,8 @@
 //@dart=2.9
 // import 'dart:ui';
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
@@ -25,21 +27,54 @@ class ProductDetailScreen extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 300, //this is the height without the appBar.
             pinned: true,
+
             //pinned:true means, the appBar will always be visible when we scroll,it will not scroll out of view
             //but instead it will simply change to an appBar and then stick at the top.
             flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
               title: Text(
                 loadedProduct.title,
+                style: TextStyle(color: Colors.white),
               ),
-              background: Hero(
-                tag: loadedProduct.id,
-                child: Image.network(
-                  loadedProduct.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Positioned(
+                    top: 80,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: null,
+                          colors: <Color>[
+                            Color(0x60000000),
+                            Color(0x60000000),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Hero(
+                    tag: loadedProduct.id,
+                    child: Image.network(
+                      loadedProduct.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
+
+          // const SliverToBoxAdapter(
+          //   child: SizedBox(
+          //     height: 30,
+          //     child: Center(
+          //       child: Text("Data"),
+          //     ),
+          //   ),
+          // ),
           //delegate tells the slivers that how to render the content of the list.
           SliverList(
             delegate: SliverChildListDelegate(

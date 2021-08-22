@@ -21,7 +21,7 @@ class ProductItem extends StatelessWidget {
     // print("Provider Product changes");
     return ClipRRect(
       //ClipRRect mean, clip with round the ractangle
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(20),
       child: GridTile(
         child: GestureDetector(
           onTap: () {
