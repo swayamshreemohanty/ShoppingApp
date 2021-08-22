@@ -25,6 +25,8 @@ class ProductDetailScreen extends StatelessWidget {
         //slivers are the scrollable areas on the screen.
         slivers: [
           SliverAppBar(
+            iconTheme: IconThemeData(color: Colors.indigo.shade400),
+            // leading: BackButton(color: Colors.indigo.shade200,),
             expandedHeight: 300, //this is the height without the appBar.
             pinned: true,
 
@@ -39,27 +41,24 @@ class ProductDetailScreen extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Positioned(
-                    top: 80,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          stops: null,
-                          colors: <Color>[
-                            Color(0x60000000),
-                            Color(0x60000000),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                   Hero(
                     tag: loadedProduct.id,
                     child: Image.network(
                       loadedProduct.imageUrl,
                       fit: BoxFit.cover,
+                    ),
+                  ),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.center,
+                        stops: [0.3, 0.4],
+                        colors: <Color>[
+                          Color(0x60000000),
+                          Color(0x00000000),
+                        ],
+                      ),
                     ),
                   ),
                 ],
