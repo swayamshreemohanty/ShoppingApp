@@ -350,7 +350,9 @@ class _AuthCardState extends State<AuthCard>
                   height: 20,
                 ),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  CircularProgressIndicator(
+                    color: Colors.blue,
+                  )
                 else
                   // ignore: deprecated_member_use
                   RaisedButton(

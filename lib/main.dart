@@ -23,20 +23,21 @@ import '../helpers/custom_route.dart';
 void main() {
   runApp(MyApp());
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.light.copyWith(
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.dark,
-    ),
-  );
-
   // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle(
-  //     statusBarColor: Colors.grey.shade800,
+  //   SystemUiOverlayStyle.dark.copyWith(
   //     statusBarIconBrightness: Brightness.light,
   //     statusBarBrightness: Brightness.dark,
   //   ),
   // );
+
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.grey.shade800,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+      // systemNavigationBarColor: Colors.amber,
+    ),
+  );
 }
 
 const MaterialColor white = const MaterialColor(
