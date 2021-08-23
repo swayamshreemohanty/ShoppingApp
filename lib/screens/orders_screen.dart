@@ -33,6 +33,8 @@ class _OrderScreenState extends State<OrderScreen> {
     // print('building orderes');
 
     return Scaffold(
+      backgroundColor: Colors.brown.shade50,
+
       appBar: AppBar(
         title: Text('Your Orders'),
       ),

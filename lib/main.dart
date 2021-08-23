@@ -3,6 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter/services.dart';
+// import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:shop_app/providers/auth.dart';
 import 'package:shop_app/providers/cart.dart';
 import 'package:shop_app/providers/order.dart';
@@ -17,7 +20,40 @@ import './screens/edit_product_screen.dart';
 import './screens/auth_screen.dart';
 import '../helpers/custom_route.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.light.copyWith(
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ),
+  );
+
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle(
+  //     statusBarColor: Colors.grey.shade800,
+  //     statusBarIconBrightness: Brightness.light,
+  //     statusBarBrightness: Brightness.dark,
+  //   ),
+  // );
+}
+
+const MaterialColor white = const MaterialColor(
+  0xFFFFFFFF,
+  const <int, Color>{
+    50: const Color(0xFFFFFFFF),
+    100: const Color(0xFFFFFFFF),
+    200: const Color(0xFFFFFFFF),
+    300: const Color(0xFFFFFFFF),
+    400: const Color(0xFFFFFFFF),
+    500: const Color(0xFFFFFFFF),
+    600: const Color(0xFFFFFFFF),
+    700: const Color(0xFFFFFFFF),
+    800: const Color(0xFFFFFFFF),
+    900: const Color(0xFFFFFFFF),
+  },
+);
 
 class MyApp extends StatelessWidget {
   @override
@@ -51,13 +87,16 @@ class MyApp extends StatelessWidget {
           builder: (context, auth, _) => MaterialApp(
               title: 'MyShop',
               theme: ThemeData(
-                primarySwatch: Colors.amber,
+                primarySwatch: white,
+                // primarySwatch: Colors.amber,
                 accentColor: Colors.deepOrange,
                 fontFamily: 'Lato',
-                pageTransitionsTheme: PageTransitionsTheme(builders: {
-                  TargetPlatform.android: CustomPageTransitionBuilder(),
-                  TargetPlatform.iOS: CustomPageTransitionBuilder(),
-                }), //here builder is a map and that is of different types builder fy=unction for different operating systems.
+                pageTransitionsTheme: PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.android: CustomPageTransitionBuilder(),
+                    TargetPlatform.iOS: CustomPageTransitionBuilder(),
+                  },
+                ), //here builder is a map and that is of different types builder fy=unction for different operating systems.
               ),
               home: auth.isAuth
                   ? ProductOverviewScreen()

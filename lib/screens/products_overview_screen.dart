@@ -1,5 +1,6 @@
 //@dart=2.9
 import 'package:flutter/material.dart';
+
 import 'package:shop_app/widgets/app_drawer.dart';
 import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
@@ -60,8 +61,10 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown.shade50,
       appBar: AppBar(
-        title: Text('MyShop'),
+        title: Text('RedTape'),
+
         //PopupMenuButton(), used to open a kind of a drop over menu as opens up as an Overlay
         actions: <Widget>[
           PopupMenuButton(
@@ -99,6 +102,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
+ 
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(

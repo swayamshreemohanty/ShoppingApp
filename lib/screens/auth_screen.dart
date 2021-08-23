@@ -264,7 +264,18 @@ class _AuthCardState extends State<AuthCard>
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black45),
+                    ),
+                    labelText: 'E-Mail',
+                    labelStyle: TextStyle(color: Colors.black54),
+                    icon: Icon(
+                      Icons.email,
+                      color: Colors.black38,
+                    ),
+                  ),
+                  cursorColor: Colors.black,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
@@ -277,9 +288,23 @@ class _AuthCardState extends State<AuthCard>
                     _authData['email'] = value;
                   },
                 ),
+
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black45),
+                    ),
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.black54),
+                    icon: Icon(
+                      Icons.vpn_key,
+                      color: Colors.black38,
+                    ),
+                  ),
+                  cursorColor: Colors.black,
+
+                  obscureText:
+                      true, //it is used to hide the character during password entry.
                   controller: _passwordController,
                   // ignore: missing_return
                   validator: (value) {
@@ -337,7 +362,8 @@ class _AuthCardState extends State<AuthCard>
                     ),
                     padding:
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                    color: Theme.of(context).primaryColor,
+                    // color: Theme.of(context).primaryColor,
+                    color: Colors.amber,
                     textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
                 // ignore: deprecated_member_use
@@ -345,9 +371,10 @@ class _AuthCardState extends State<AuthCard>
                   child: Text(
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
-                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 6),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  textColor: Theme.of(context).primaryColor,
+                  // textColor: Theme.of(context).primaryColor,
+                  textColor: Colors.black,
                 ),
               ],
             ),

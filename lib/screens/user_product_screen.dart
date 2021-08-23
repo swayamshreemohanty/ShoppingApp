@@ -24,6 +24,7 @@ class UserProductScreen extends StatelessWidget {
     //Yes, if we add listen:false, then it should work.
 
     return Scaffold(
+      backgroundColor: Colors.brown.shade50,
       appBar: AppBar(
         title: Text('Your Products'),
         actions: [

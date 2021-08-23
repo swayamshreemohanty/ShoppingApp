@@ -18,6 +18,8 @@ class ProductDetailScreen extends StatelessWidget {
     final loadedProduct = Provider.of<Products>(context).findById(productId);
 
     return Scaffold(
+      backgroundColor: Colors.brown.shade50,
+
       // appBar: AppBar(
       //   title: Text(loadedProduct.title),
       // ),
