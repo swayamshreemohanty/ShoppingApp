@@ -21,23 +21,28 @@ import './screens/auth_screen.dart';
 import '../helpers/custom_route.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+    ),
+  );
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(MyApp());
 
   // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle.dark.copyWith(
+  //   SystemUiOverlayStyle(
+  //     statusBarColor: Colors.grey.shade800,
   //     statusBarIconBrightness: Brightness.light,
   //     statusBarBrightness: Brightness.dark,
+  //     // systemNavigationBarColor: Colors.amber,
   //   ),
   // );
-
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: Colors.grey.shade800,
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.dark,
-      // systemNavigationBarColor: Colors.amber,
-    ),
-  );
 }
 
 const MaterialColor white = const MaterialColor(
