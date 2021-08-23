@@ -30,7 +30,9 @@ class UserProductScreen extends StatelessWidget {
         actions: [
           IconButton(
             //'icon' is the argument, 'Icon()' is the widget, 'Icons.add' is the sign.
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+            ),
             onPressed: () {
               Navigator.of(context).pushNamed(EditProductScreen.routeName);
             },
@@ -51,6 +53,7 @@ class UserProductScreen extends StatelessWidget {
               )
             : RefreshIndicator(
                 onRefresh: () => _refreshProducts(context),
+                color: Colors.blue,
                 child: Consumer<Products>(
                   builder: (ctx, productData, _) => productData.items.isEmpty
                       ? Center(

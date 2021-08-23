@@ -124,14 +124,16 @@ class _OrderButtonState extends State<OrderButton> {
                   .hideCurrentSnackBar(); //it is used to show the current snackbar message, by overwriting the previous snackbar message.
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Order successful!'),
+                  content: Text('Order placed successful!'),
                   duration: Duration(seconds: 3),
                 ),
               );
             },
 
       child: _isLoading
-          ? CircularProgressIndicator()
+          ? CircularProgressIndicator(
+              color: Colors.blue,
+            )
           : Text(
               'ORDER NOW',
               style: TextStyle(color: Colors.black),

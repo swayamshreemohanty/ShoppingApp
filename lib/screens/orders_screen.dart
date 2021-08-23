@@ -46,7 +46,10 @@ class _OrderScreenState extends State<OrderScreen> {
         builder: (ctx, dataSnapshot) {
           // print(dataSnapshot.data);
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              color: Colors.blue,
+            ));
           } else {
             if (dataSnapshot.error != null) {
               return Center(
