@@ -102,7 +102,6 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
- 
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(

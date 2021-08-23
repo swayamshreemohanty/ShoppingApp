@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/services.dart';
-// import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 import 'package:shop_app/providers/auth.dart';
 import 'package:shop_app/providers/cart.dart';
 import 'package:shop_app/providers/order.dart';
@@ -21,28 +21,21 @@ import './screens/auth_screen.dart';
 import '../helpers/custom_route.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.light.copyWith(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.light,
-    ),
-  );
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(MyApp());
 
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle(
-  //     statusBarColor: Colors.grey.shade800,
-  //     statusBarIconBrightness: Brightness.light,
-  //     statusBarBrightness: Brightness.dark,
-  //     // systemNavigationBarColor: Colors.amber,
-  //   ),
-  // );
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      // statusBarBrightness: Brightness.dark,
+      // systemNavigationBarColor: Colors.amber,
+    ),
+  );
+  runApp(MyApp());
 }
 
 const MaterialColor white = const MaterialColor(
