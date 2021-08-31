@@ -60,8 +60,8 @@ class Products with ChangeNotifier {
   Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
     final filterString =
         filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
-    var url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken&$filterString';
+    var url = Uri.parse(
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken&$filterString');
     try {
       final response = await http.get(url);
       // print("This is response body");
@@ -76,8 +76,8 @@ class Products with ChangeNotifier {
         _items.clear();
         return;
       }
-      url =
-          'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/userFavorites/$userId.json?auth=$authToken';
+      url = Uri.parse(
+          'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/userFavorites/$userId.json?auth=$authToken');
       final favoriteResponse = await http.get(url);
       final favoriteData = json.decode(favoriteResponse.body);
       print("This is favorite response body");
@@ -111,8 +111,8 @@ class Products with ChangeNotifier {
     //Ny using 'async', all of the below code which are come under the 'Future' automatically wrapped in to a Future.
     //using this 'async' here, the function or the method on which we use it always returns a future and that future might
     //then not ield anything in the end but it always returns  a future because this now is all wrapped into a future.
-    final url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$authToken"';
+    final url = Uri.parse(
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth="$authToken""');
 
     //Here we return this http.post(), because here we return the result of calling post and
     //then calling .then() and the result of calling .then() is another future and that's the future we return here.
@@ -161,8 +161,8 @@ class Products with ChangeNotifier {
   Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      final url =
-          'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json?auth=$authToken';
+      final url = Uri.parse(
+          'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/"$id".json?auth="$authToken"');
       try {
         await http.patch(url,
             body: json.encode({
@@ -184,8 +184,8 @@ class Products with ChangeNotifier {
 //triggered from the modify products from the drawer.
 
   Future<void> deleteProduct(String id) async {
-    final url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json?auth=$authToken';
+    final url = Uri.parse(
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/products/"$id".json?auth="$authToken"');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);

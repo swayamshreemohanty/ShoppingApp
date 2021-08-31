@@ -331,8 +331,17 @@ class _AuthCardState extends State<AuthCard>
                       position: _slideAnimation,
                       child: TextFormField(
                         enabled: _authMode == AuthMode.Signup,
-                        decoration:
-                            InputDecoration(labelText: 'Confirm Password'),
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black45)),
+                          labelText: 'Confirm Password',
+                          labelStyle: TextStyle(color: Colors.black54),
+                          icon: Icon(
+                            Icons.vpn_key,
+                            color: Colors.black38,
+                          ),
+                        ),
+                        cursorColor: Colors.black,
                         obscureText: true,
                         validator: _authMode == AuthMode.Signup
                             // ignore: missing_return

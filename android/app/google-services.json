@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "566060458384",
+    "firebase_url": "https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "flutter-shop-app-a0458",
+    "storage_bucket": "flutter-shop-app-a0458.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:566060458384:android:6baf6827299eec5c42d315",
+        "android_client_info": {
+          "package_name": "com.redtape.shopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "566060458384-nu6no7n54md7gt7738n4jgdvbs7lcs8o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redtape.shopping",
+            "certificate_hash": "ecfe9dc0941afc497b9189dfa1dd30fa7658b7e7"
+          }
+        },
+        {
+          "client_id": "566060458384-m7mc5r2doert74gpoj0rdk6m36uqrpdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXvmwEQ1YBlNOJvjzp7aj9K6Q35zlKcB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "566060458384-m7mc5r2doert74gpoj0rdk6m36uqrpdl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

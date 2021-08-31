@@ -9,7 +9,7 @@ class Product with ChangeNotifier {
   final String description;
   final double price;
   final String imageUrl;
- 
+
   bool isFavorite;
   //All these porperties are final, because these are
   //can't reassign the value after a product has been created.
@@ -32,8 +32,8 @@ class Product with ChangeNotifier {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
-    final url =
-        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/userFavorites/$userId/$id.json?auth=$authToken';
+    final url = Uri.parse(
+        'https://flutter-shop-app-a0458-default-rtdb.asia-southeast1.firebasedatabase.app/userFavorites/$userId/$id.json?auth=$authToken');
     try {
       final response = await http.put(url,
           body: json.encode(
